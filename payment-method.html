@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Payment Method</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      padding: 40px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: rgb(255, 94, 0);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: rgb(251, 91, 5);
+    }
+    #message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 18px;
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Add Payment Method</h1>
+
+  <form onsubmit="handleSubmit(event)">
+    <label for="payment-type">Payment Type</label>
+    <select id="payment-type" onchange="toggleFields()" required>
+      <option value="">Select Payment Type</option>
+      <option value="bank">Bank Account</option>
+      <option value="upi">UPI</option>
+      <option value="cash">Cash</option>
+    </select>
+
+    <div id="bank-fields" style="display:none;">
+      <label for="account-name">Account Holder Name</label>
+      <input type="text" id="account-name" name="accountName" />
+
+      <label for="account-number">Account Number</label>
+      <input type="text" id="account-number" name="accountNumber" />
+
+      <label for="ifsc">IFSC Code</label>
+      <input type="text" id="ifsc" name="ifsc" />
+    </div>
+
+    <div id="upi-fields" style="display:none;">
+      <label for="upi-id">UPI ID</label>
+      <input type="text" id="upi-id" name="upiId" />
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="message"></div>
+
+  <script>
+    function toggleFields() {
+      const type = document.getElementById("payment-type").value;
+      document.getElementById("bank-fields").style.display = type === "bank" ? "block" : "none";
+      document.getElementById("upi-fields").style.display = type === "upi" ? "block" : "none";
+      document.getElementById("message").innerText = '';
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      const type = document.getElementById("payment-type").value;
+      const messageBox = document.getElementById("message");
+
+      if (type === "bank") {
+        const name = document.getElementById("account-name").value.trim();
+        const number = document.getElementById("account-number").value.trim();
+        const ifsc = document.getElementById("ifsc").value.trim();
+
+        if (!name || !number || !ifsc) {
+          alert("Please fill in all bank details.");
+          return;
+        }
+
+        messageBox.innerText = `Bank details submitted successfully!`;
+      } else if (type === "upi") {
+        const upiId = document.getElementById("upi-id").value.trim();
+
+        if (!upiId) {
+          alert("Please enter your UPI ID.");
+          return;
+        }
+
+        messageBox.innerText = `UPI ID submitted successfully!`;
+      } else if (type === "cash") {
+        messageBox.innerText = "Order placed. Please pick up the order at the cafeteria.";
+      } else {
+        alert("Please select a payment method.");
+      }
+    }
+  </script>
+
+</body>
+</html>
+
