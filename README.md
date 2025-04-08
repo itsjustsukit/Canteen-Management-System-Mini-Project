@@ -1,0 +1,1 @@
+just to give a basic understanding, this can be used for canteen management, you have home page, a menu page, order and cart page, and a billing page(haven't made this one properly as it was just a last min addition, will do the necessary changes in future) and you can futher change the code with your own preferance and use it as per your conviniance.
